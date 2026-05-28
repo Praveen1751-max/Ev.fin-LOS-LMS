@@ -18,8 +18,9 @@ const PINCODE_DATA: Record<string, { city: string; state: string }> = {
   '500044': { city: 'Hyderabad', state: 'Telangana' },
 }
 
-export async function GET(_req: Request, { params }: { params: { code: string } }) {
-  const code = params.code.trim()
+export async function GET(_req: Request, { params }: { params: Promise<{ code: string }> }) {
+  const { code: rawCode } = await params
+  const code = rawCode.trim()
 
   if (!/^\d{6}$/.test(code)) {
     return NextResponse.json({ eligible: false, known: false, reason: 'Invalid pincode format' })

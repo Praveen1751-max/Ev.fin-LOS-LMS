@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: app, error } = await supabase
     .from('applications')
     .select('*, dealer:dealers(name, city)')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error || !app) return NextResponse.json({ error: 'Not found' }, { status: 404 })
