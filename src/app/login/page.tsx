@@ -27,15 +27,16 @@ export default function LoginPage() {
       return
     }
 
-    // Get role and redirect
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', data.user.id)
-      .single()
-
-    const role = profile?.role
-    router.push(role === 'fso' ? '/fso/home' : '/lms/dashboard')
+    // Get role via server API (avoids client-side key format issues)
+    try {
+      const res = await fetch('/api/auth/role')
+      const { role } = await res.json()
+      router.push(role === 'fso' ? '/fso/home' : '/lms/dashboard')
+    } catch {
+      // Fallback: check email pattern
+      const email = data.user.email ?? ''
+      router.push(email.startsWith('fso') ? '/fso/home' : '/lms/dashboard')
+    }
   }
 
   const fillDemo = (type: 'fso' | 'analyst' | 'rcm') => {

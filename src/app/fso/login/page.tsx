@@ -27,14 +27,11 @@ export default function FsoLoginPage() {
       return
     }
 
-    // Fetch profile role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', data.user.id)
-      .single()
+    // Fetch role via server API
+    const res = await fetch('/api/auth/role')
+    const { role } = await res.json()
 
-    if (profile?.role !== 'fso') {
+    if (role !== 'fso') {
       setError('This app is for Field Sales Officers only. Please use the web portal.')
       await supabase.auth.signOut()
       setLoading(false)
