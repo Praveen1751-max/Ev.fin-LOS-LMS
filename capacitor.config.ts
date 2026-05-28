@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'out',
   // Load the deployed Vercel app directly — no local bundle needed
   server: {
-    url: 'https://ev-fin-los-lms.vercel.app/fso/home',
+    url: 'https://ev-fin-los-lms.vercel.app/fso/login',
     cleartext: false,
   },
   android: {
