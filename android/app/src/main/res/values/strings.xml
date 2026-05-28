@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ev.fin Field App</string>
+    <string name="title_activity_main">ev.fin Field App</string>
+    <string name="package_name">in.evfin.fieldapp</string>
+    <string name="custom_url_scheme">in.evfin.fieldapp</string>
+</resources>
